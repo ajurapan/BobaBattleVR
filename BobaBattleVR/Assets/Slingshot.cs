@@ -36,7 +36,12 @@ public class Slingshot : MonoBehaviour {
             var device = SteamVR_Controller.Input((int)trackedController.index);
             if (inSlingShot)
             {
-                if (device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
+                if(device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
+                {
+                    inSlingShot = false;
+                    slingGO.transform.position = slingShotStart;
+                }
+                else if (device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
                 {
                     slingGO.transform.position = trackedController.transform.position;
                 }
