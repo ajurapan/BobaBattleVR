@@ -39,7 +39,11 @@ public class Slingshot : MonoBehaviour {
                 if(device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
                 {
                     inSlingShot = false;
+                    currBall.transform.parent = null; //make the ball a free object (not connected to the slingGO anymore)
+
                     slingGO.transform.position = slingShotStart;
+                    Rigidbody r = currBall.GetComponent<Rigidbody>();
+                    r.velocity = Vector3.forward * 100f;
                 }
                 else if (device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
                 {
