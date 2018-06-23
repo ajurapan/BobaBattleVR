@@ -7,13 +7,14 @@ using UnityEngine;
 
 public class Slingshot : MonoBehaviour {
 
+
    
 
     public GameObject ballPrefab;
     public GameObject slingGO; //slingGameObject
     public GameObject ballStand;
 
-    private GameObject currBall;
+    public GameObject currBall;
     private Vector3 slingShotStart; //use to remember the start position
 
     public static bool ballHolding = false;
@@ -50,13 +51,14 @@ public class Slingshot : MonoBehaviour {
             //}
 	}
 
-  
 
     //void OnTriggerEnter(Collider other)
     //{
-    //    trackedController = other.GetComponent<SteamVR_TrackedObject>();
-    //    if (trackedController != null)
+    //    if (ballHolding == true)// && other.name == "slingGO")
     //    {
+    //        Debug.Log("enter " +other.name);
+    //        currBall.transform.parent = slingGO.transform;
+    //        currBall.transform.localPosition = Vector3.zero;
     //        inSlingShot = true;
     //    }
     //}
