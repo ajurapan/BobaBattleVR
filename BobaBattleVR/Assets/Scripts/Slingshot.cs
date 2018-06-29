@@ -7,9 +7,6 @@ using UnityEngine;
 
 public class Slingshot : MonoBehaviour {
 
-
-   
-
     public GameObject ballPrefab;
     public GameObject slingGO; //slingGameObject
     public GameObject ballStand;
@@ -18,7 +15,7 @@ public class Slingshot : MonoBehaviour {
     private Vector3 slingShotStart; //use to remember the start position
 
     public static bool ballHolding = false;
-    private bool inSlingShot = false;
+    public static bool inSlingShot = false;
     private bool ready = true; //spawn a ball when true
      
 
@@ -39,6 +36,13 @@ public class Slingshot : MonoBehaviour {
             ready = false; // make it false here to make it don't keep sprawning a ball
         }
 
+        if(inSlingShot == true)
+        {
+            Debug.Log("In Slingshot true ");
+            currBall.transform.parent = slingGO.transform;
+            currBall.transform.localPosition = Vector3.zero;
+        }
+
             //if (!inSlingShot) //when the ball is not in Slingshot
             //{
             //    if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
@@ -54,9 +58,11 @@ public class Slingshot : MonoBehaviour {
 
     //void OnTriggerEnter(Collider other)
     //{
-    //    if (ballHolding == true)// && other.name == "slingGO")
+    //-------this doesn't work-------
+    //    if (ballHolding == true && other.name == "slingGO")
     //    {
-    //        Debug.Log("enter " +other.name);
+    //        Debug.Log("collided with slingshot while holding a ball");
+    //        Debug.Log("enter " + other.name);
     //        currBall.transform.parent = slingGO.transform;
     //        currBall.transform.localPosition = Vector3.zero;
     //        inSlingShot = true;

@@ -33,22 +33,23 @@ public class PickUpParent : MonoBehaviour {
             Slingshot.ballHolding = true; 
         }
 
-        //if(Slingshot.ballHolding == true && col.name=="slingGO")
-        //{
-        //    Debug.Log("collided with slingshot while holding a ball");
-        //    Slingshot.currBall.transform.parent = Slingshot.slingGO.transform;
-        //    Slingshot.currBall.transform.localPosition = Vector3.zero;
-        //}
+        if(Slingshot.ballHolding == true && col.name == "Band Bone")
+        {
+            Debug.Log("collided with slingshot Band Bone while holding a ball");  
+            Slingshot.inSlingShot = true;       
+        }
 
-       // if()
         if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger) && col.name == "Ball(Clone)")
         {
             //drop the ball to the ground
-            Debug.Log("object released");
-            col.gameObject.transform.SetParent(null);
-            col.attachedRigidbody.isKinematic = false;
-            col.attachedRigidbody.useGravity = true;
-            Slingshot.ballHolding = false;
+            if(Slingshot.inSlingShot == false)
+            {
+                Debug.Log("object released");
+                col.gameObject.transform.SetParent(null);
+                col.attachedRigidbody.isKinematic = false;
+                col.attachedRigidbody.useGravity = true;
+                Slingshot.ballHolding = false;
+            }
 
         }
     }
