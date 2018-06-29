@@ -11,7 +11,7 @@ public class Slingshot : MonoBehaviour {
     public GameObject slingGO; //slingGameObject
     public GameObject ballStand;
 
-    public GameObject currBall;
+    private GameObject currBall;
     private Vector3 slingShotStart; //use to remember the start position
 
     public static bool ballHolding = false;
@@ -36,24 +36,52 @@ public class Slingshot : MonoBehaviour {
             ready = false; // make it false here to make it don't keep sprawning a ball
         }
 
-        if(inSlingShot == true)
+        if(inSlingShot)
         {
             Debug.Log("In Slingshot true ");
             currBall.transform.parent = slingGO.transform;
             currBall.transform.localPosition = Vector3.zero;
+            ballHolding = false;
         }
 
-            //if (!inSlingShot) //when the ball is not in Slingshot
-            //{
-            //    if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
-            //    {
-                    
-            //    }
+        if (inSlingShot && !ballHolding)
+        {
+            if (PickUpParent.device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                //ready = true;
+              
+                Debug.Log("Shoot the ball");
 
-            //    //when the ball touch the slingshot (collider) OnTriggerEnter? 
-            //    //change the ball transform on the slingshot (coded), inSlingShot = true, shot the ball(coded)
-            //}
-	}
+                Vector3 ballPos = currBall.transform.position;
+
+                slingGO.transform.position = slingShotStart;
+                currBall.transform.parent = null;
+
+                Rigidbody r = currBall.GetComponent<Rigidbody>();
+                r.velocity = Vector3.forward * 100f; //The ball will move to the z direction Vector3.forward = Vector3(0,0,1)
+                r.velocity = (slingShotStart - ballPos) * 50f;
+                r.useGravity = true;
+                inSlingShot = false;
+
+            }
+            else if (PickUpParent.device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                Debug.Log("Moving the ball");
+                slingGO.transform.position = PickUpParent.trackedObj.transform.position;
+            }
+        }
+
+        //if (!inSlingShot) //when the ball is not in Slingshot
+        //{
+        //    if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
+        //    {
+
+        //    }
+
+        //    //when the ball touch the slingshot (collider) OnTriggerEnter? 
+        //    //change the ball transform on the slingshot (coded), inSlingShot = true, shot the ball(coded)
+        //}
+    }
 
 
     //void OnTriggerEnter(Collider other)
