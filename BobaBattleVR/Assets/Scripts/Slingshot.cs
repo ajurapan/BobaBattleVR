@@ -36,7 +36,7 @@ public class Slingshot : MonoBehaviour {
             ready = false; // make it false here to make it don't keep sprawning a ball
         }
 
-        if(inSlingShot)
+        if(inSlingShot && ballHolding)
         {
             Debug.Log("In Slingshot true ");
             currBall.transform.parent = slingGO.transform;

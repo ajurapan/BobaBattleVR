@@ -33,6 +33,7 @@ public class PickUpParent : MonoBehaviour {
             col.attachedRigidbody.isKinematic = true; //make the ridgid body not affected by the physic system
             col.gameObject.transform.SetParent(gameObject.transform);
             Slingshot.ballHolding = true; 
+            //this one 
         }
 
         //reload the ball, now the ball is in SlingShot
