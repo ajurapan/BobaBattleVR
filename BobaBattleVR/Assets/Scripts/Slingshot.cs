@@ -25,8 +25,6 @@ public class Slingshot : MonoBehaviour {
 
    
     void FixedUpdate() {
-        Debug.Log("In fixed update");
-
         if (ready)
         {
             Debug.Log("In SlingShot.cs ready");
@@ -47,9 +45,7 @@ public class Slingshot : MonoBehaviour {
         if (inSlingShot && !ballHolding)
         {
             if (PickUpParent.device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
-            {
-                //ready = true;
-              
+            {                
                 Debug.Log("Shoot the ball");
 
                 Vector3 ballPos = currBall.transform.position;
@@ -58,13 +54,15 @@ public class Slingshot : MonoBehaviour {
                 currBall.transform.parent = null;
 
                 Rigidbody r = currBall.GetComponent<Rigidbody>();
-                r.velocity = Vector3.forward * 100f; //The ball will move to the z direction Vector3.forward = Vector3(0,0,1)
-                r.velocity = (slingShotStart - ballPos) * 50f;
+                r.velocity = Vector3.forward * 50f; //The ball will move to the z direction Vector3.forward = Vector3(0,0,1)
+                r.velocity = (slingShotStart - ballPos) * 5f;
+                r.isKinematic = false;
                 r.useGravity = true;
                 inSlingShot = false;
+                ready = true;
 
             }
-            else if (PickUpParent.device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
+            if (PickUpParent.device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
             {
                 Debug.Log("Moving the ball");
                 slingGO.transform.position = PickUpParent.trackedObj.transform.position;

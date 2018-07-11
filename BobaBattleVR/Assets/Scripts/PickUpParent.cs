@@ -20,15 +20,14 @@ public class PickUpParent : MonoBehaviour {
 
     void OnTriggerStay(Collider col)
     {
-        //GetComponent<Slingshot>();
+        GetComponent<Slingshot>();
         device = SteamVR_Controller.Input((int)trackedObj.index);
 
         Debug.Log("You have collided with " + col.name + " and activated OnTriggerStay");
 
         //pick up a ball, the ball transform is now with the controller
-        if (device.GetTouch(SteamVR_Controller.ButtonMask.Trigger) && col.name =="Ball(Clone)" && !Slingshot.ballHolding && !Slingshot.inSlingShot)
+        if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger) && col.name =="Ball(Clone)" )// && !Slingshot.ballHolding && !Slingshot.inSlingShot)
         {
-            Debug.Log("col.name" + col.name);  
             Debug.Log("You have collided with " + col.name + " while holding down touch");
             col.attachedRigidbody.isKinematic = true; //make the ridgid body not affected by the physic system
             col.gameObject.transform.SetParent(gameObject.transform);
@@ -36,25 +35,24 @@ public class PickUpParent : MonoBehaviour {
             //this one 
         }
 
-        //reload the ball, now the ball is in SlingShot
-        if(Slingshot.ballHolding && col.name == "Band Bone" && !Slingshot.inSlingShot)
-        {
-            Debug.Log("collided with slingshot Band Bone while holding a ball");  
-            Slingshot.inSlingShot = true;       
-        }
 
-        if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger) && col.name == "Ball(Clone)")
+        if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger) && !Slingshot.inSlingShot && Slingshot.ballHolding)
         {
-            //drop the ball to the ground
-            if(!Slingshot.inSlingShot)
+            //load the ball to the slingshot, now the ball is in SlingShot
+            if  (col.name == "Band Bone")
             {
+                Debug.Log("load the ball");
+                Slingshot.inSlingShot = true;
+            }
+            else //if (col.name == "Ball(Clone)" )
+            {
+                //drop the ball to the ground
                 Debug.Log("object released");
                 col.gameObject.transform.SetParent(null);
                 col.attachedRigidbody.isKinematic = false;
                 col.attachedRigidbody.useGravity = true;
                 Slingshot.ballHolding = false;
             }
-
         }
-    }
+    }      
 }
