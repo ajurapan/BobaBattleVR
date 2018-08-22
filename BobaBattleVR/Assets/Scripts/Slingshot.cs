@@ -59,6 +59,7 @@ public class Slingshot : MonoBehaviour {
                 r.isKinematic = false;
                 r.useGravity = true;
                 inSlingShot = false;
+                //try to destory the ball after 1 sec it hit the ground
                 ready = true;
 
             }
