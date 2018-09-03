@@ -47,21 +47,7 @@ public class Slingshot : MonoBehaviour {
             if (PickUpParent.device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
             {                
                 Debug.Log("Shoot the ball");
-
-                Vector3 ballPos = currBall.transform.position;
-
-                slingGO.transform.position = slingShotStart;
-                currBall.transform.parent = null;
-
-                Rigidbody r = currBall.GetComponent<Rigidbody>();
-                r.velocity = Vector3.forward * 50f; //The ball will move to the z direction Vector3.forward = Vector3(0,0,1)
-                r.velocity = (slingShotStart - ballPos) * 5f;
-                r.isKinematic = false;
-                r.useGravity = true;
-                inSlingShot = false;
-                //try to destory the ball after 1 sec it hit the ground
-                ready = true;
-
+                shootTheBall();
             }
             if (PickUpParent.device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
             {
@@ -69,6 +55,7 @@ public class Slingshot : MonoBehaviour {
                 slingGO.transform.position = PickUpParent.trackedObj.transform.position;
             }
         }
+
 
         //if (!inSlingShot) //when the ball is not in Slingshot
         //{
@@ -80,6 +67,24 @@ public class Slingshot : MonoBehaviour {
         //    //when the ball touch the slingshot (collider) OnTriggerEnter? 
         //    //change the ball transform on the slingshot (coded), inSlingShot = true, shot the ball(coded)
         //}
+    }
+
+    void shootTheBall()
+    {
+        Vector3 ballPos = currBall.transform.position;
+
+        slingGO.transform.position = slingShotStart;
+        currBall.transform.parent = null;
+
+        Rigidbody r = currBall.GetComponent<Rigidbody>();
+        r.velocity = Vector3.forward * 50f; //The ball will move to the z direction Vector3.forward = Vector3(0,0,1)
+        r.velocity = (slingShotStart - ballPos) * 5f;
+        r.isKinematic = false;
+        r.useGravity = true;
+        inSlingShot = false;
+        //try to destory the ball after 1 sec it hit the ground
+
+        ready = true;
     }
 
 
