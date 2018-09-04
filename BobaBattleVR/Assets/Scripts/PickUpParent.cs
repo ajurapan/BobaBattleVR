@@ -10,6 +10,9 @@ public class PickUpParent : MonoBehaviour {
     public static SteamVR_TrackedObject trackedObj;
     public static SteamVR_Controller.Device device;
 
+
+    private Ball ball;
+
     void Awake () {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
 	}
@@ -26,7 +29,7 @@ public class PickUpParent : MonoBehaviour {
         Debug.Log("You have collided with " + col.name + " and activated OnTriggerStay");
 
         //pick up a ball, the ball transform is now with the controller
-        if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger) && col.name =="Ball(Clone)" )// && !Slingshot.ballHolding && !Slingshot.inSlingShot)
+        if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger) && col.name =="Ball(Clone)"  && !Slingshot.ballHolding && !Slingshot.inSlingShot)
         {
             Debug.Log("You have collided with " + col.name + " while holding down touch");
             col.attachedRigidbody.isKinematic = true; //make the ridgid body not affected by the physic system
